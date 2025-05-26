@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="bg-black text-gold-500">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }} – DevGenie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --gold: #FFD700;
+        }
+        .text-gold-500 { color: var(--gold); }
+        .bg-gold-500 { background-color: var(--gold); }
+        .hover\:bg-gold-600:hover { background-color: #e6c200; }
+        .border-gold-500 { border-color: var(--gold); }
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Custom scrollbar for textarea */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: #111;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background-color: var(--gold);
+            border-radius: 4px;
+        }
+
+        /* Fade in animation for container */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white font-sans min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="flex items-center justify-between px-6 md:px-20 py-4 border-b border-gray-800 glass">
+        <div class="flex items-center space-x-3">
+            <img src="{% static 'logo.png' %}" alt="DevGenie Logo" class="h-12" />
+            <span class="text-2xl font-bold text-gold-500">DevGenie</span>
+        </div>
+        <!-- Marquee with tagline instead of nav links -->
+        <div class="hidden md:block w-1/2 overflow-hidden whitespace-nowrap">
+            <marquee behavior="scroll" direction="left" scrollamount="10" class="text-gray-400 italic text-right">
+                AI-powered DevOps Automation Assistant — Streamlining your development pipeline with intelligent automation
+            </marquee>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto p-6 md:p-12 fade-in-up">
+        <h1 class="text-4xl font-bold text-gold-500 mb-8 text-center">{{ title }}</h1>
+
+        <label for="output" class="sr-only">Generated code output</label>
+        <textarea
+            id="output"
+            readonly
+            rows="20"
+            class="w-full p-6 rounded-lg bg-black border border-gold-500 text-white font-mono text-sm md:text-base resize-y shadow-lg focus:outline-none focus:ring-4 focus:ring-gold-500 transition"
+        >{{ output_code }}</textarea>
+
+        <div class="mt-8 flex justify-center">
+            <button
+                id="copyBtn"
+                aria-label="Copy generated code to clipboard"
+                class="inline-flex items-center gap-2 px-8 py-3 bg-gold-500 text-black font-semibold rounded-lg hover:bg-gold-600 transition focus:outline-none focus:ring-4 focus:ring-gold-300 relative overflow-hidden"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 16h8M8 12h8m-7-4h6a2 2 0 012 2v10a2 2 0 01-2 2H9a2 2 0 01-2-2V8a2 2 0 012-2z" />
+                </svg>
+                <span id="btnText">Copy Code</span>
+                <!-- Ripple effect container -->
+                <span id="ripple" class="absolute rounded-full bg-white opacity-30 pointer-events-none" style="width: 100px; height: 100px; top: -50px; left: -50px; transform: scale(0);"></span>
+            </button>
+        </div>
+        <!-- Back to Home -->
+    <div class="mt-6 text-center">
+        <a href="{% url 'home' %}"
+           class="inline-block px-6 py-2 border border-gold-500 rounded text-gold-500 hover:bg-gold-500 hover:text-black transition">
+            ← Back to Home
+        </a>
+    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 border-t border-gray-800 text-center text-sm text-gray-500">
+        <div class="flex justify-center space-x-4 mb-2">
+            <a href="#" class="hover:text-gold-500">GitHub</a>
+            <a href="#" class="hover:text-gold-500">LinkedIn</a>
+            <a href="#" class="hover:text-gold-500">Docs</a>
+        </div>
+        © 2025 DevGenie. All rights reserved by Durga Prakash Shilarapu.
+    </footer>
+
+<script>
+    const copyBtn = document.getElementById('copyBtn');
+    const btnText = document.getElementById('btnText');
+    const output = document.getElementById('output');
+    const ripple = document.getElementById('ripple');
+
+    copyBtn.addEventListener('click', async (e) => {
+        // Ripple animation
+        const rect = copyBtn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.opacity = '0.3';
+        ripple.style.transition = 'transform 0.6s ease, opacity 1s ease';
+        requestAnimationFrame(() => {
+            ripple.style.transform = 'scale(2)';
+            ripple.style.opacity = '0';
+        });
+
+        try {
+            await navigator.clipboard.writeText(output.value);
+            btnText.textContent = 'Copied!';
+            copyBtn.classList.add('bg-green-500');
+            copyBtn.classList.remove('bg-gold-500', 'hover:bg-gold-600');
+
+            setTimeout(() => {
+                btnText.textContent = 'Copy Code';
+                copyBtn.classList.remove('bg-green-500');
+                copyBtn.classList.add('bg-gold-500', 'hover:bg-gold-600');
+            }, 2000);
+        } catch {
+            alert('Failed to copy code. Please copy manually.');
+        }
+    });
+</script>
+
+</body>
+</html>

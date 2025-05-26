@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="bg-black text-gold-500">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Generate GitHub Actions Workflow – DevGenie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --gold: #FFD700;
+        }
+        .text-gold-500 { color: var(--gold); }
+        .bg-gold-500 { background-color: var(--gold); }
+        .border-gold-500 { border-color: var(--gold); }
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-sans">
+
+    <!-- Navbar -->
+    <nav class="flex items-center justify-between px-6 md:px-20 py-4 border-b border-gray-800 glass">
+        <div class="flex items-center space-x-3">
+            <img src="{% static 'logo.png' %}" alt="DevGenie Logo" class="h-12" />
+            <span class="text-2xl font-bold text-gold-500">DevGenie</span>
+        </div>
+        <!-- Marquee with tagline instead of nav links -->
+        <div class="hidden md:block w-1/2 overflow-hidden whitespace-nowrap">
+            <marquee behavior="scroll" direction="left" scrollamount="10" class="text-gray-400 italic text-right">
+                AI-powered DevOps Automation Assistant — Streamlining your development pipeline with intelligent automation
+            </marquee>
+        </div>
+    </nav>
+
+    <!-- Banner -->
+    <section
+        class="relative bg-cover bg-center h-48 md:h-64 flex items-center justify-center mb-12"
+        style="background-image: url('{% static 'banner.png' %}');"
+    >
+        <div class="bg-black bg-opacity-60 p-6 rounded-lg text-center max-w-3xl">
+            <h1 class="text-4xl md:text-5xl font-bold text-gold-500 mb-2">Generate GitHub Actions Workflow</h1>
+            <p class="text-white text-lg md:text-xl">Automate CI/CD with confidence using DevGenie workflows.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="px-4 sm:px-6 md:px-12 lg:px-32 xl:px-48 mx-auto">
+        <h2 class="text-3xl text-gold-500 font-semibold text-center mb-8">Workflow Generator</h2>
+
+        {% if error %}
+        <p class="text-red-500 mb-4 text-center font-semibold">{{ error }}</p>
+        {% endif %}
+
+        <form method="post" action="" class="w-full bg-black border border-gold-500 rounded-lg p-6 md:p-10 space-y-6 shadow-xl transition">
+            {% csrf_token %}
+
+            <div class="flex flex-col">
+                <label for="language" class="mb-2 font-medium text-gold-500">Project Language *</label>
+                <input type="text" id="language" name="language" placeholder="e.g. python, node, java" required
+                    class="border border-gold-300 rounded px-4 py-3 bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold-500 w-full" />
+            </div>
+
+            <div class="flex flex-col">
+                <label for="repo_url" class="mb-2 font-medium text-gold-500">Repository URL *</label>
+                <input type="url" id="repo_url" name="repo_url" placeholder="https://github.com/user/repo.git" required
+                    class="border border-gold-300 rounded px-4 py-3 bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold-500 w-full" />
+            </div>
+
+            <div class="flex flex-col">
+                <label for="branch" class="mb-2 font-medium text-gold-500">Branch *</label>
+                <input type="text" id="branch" name="branch" placeholder="e.g. main" required
+                    class="border border-gold-300 rounded px-4 py-3 bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold-500 w-full" />
+            </div>
+
+            <div class="flex flex-col">
+                <label for="docker_path" class="mb-2 font-medium text-gold-500">Dockerfile Path *</label>
+                <input type="text" id="docker_path" name="docker_path" placeholder="./Dockerfile" required
+                    class="border border-gold-300 rounded px-4 py-3 bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold-500 w-full" />
+            </div>
+
+            <div class="flex flex-col">
+                <label for="deployment_manifest" class="mb-2 font-medium text-gold-500">Deployment Manifest Path *</label>
+                <input type="text" id="deployment_manifest" name="deployment_manifest" placeholder="./k8s/deployment.yaml" required
+                    class="border border-gold-300 rounded px-4 py-3 bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold-500 w-full" />
+            </div>
+
+            <div class="flex flex-col">
+                <label for="git_username" class="mb-2 font-medium text-gold-500">Git Username (optional)</label>
+                <input type="text" id="git_username" name="git_username" placeholder="Your Git username"
+                    class="border border-gold-300 rounded px-4 py-3 bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold-500 w-full" />
+            </div>
+
+            <div class="flex flex-col">
+                <label for="git_email" class="mb-2 font-medium text-gold-500">Git Email (optional)</label>
+                <input type="email" id="git_email" name="git_email" placeholder="your.email@example.com"
+                    class="border border-gold-300 rounded px-4 py-3 bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold-500 w-full" />
+            </div>
+
+            <div class="flex flex-col">
+                <label for="sonarqube_url" class="mb-2 font-medium text-gold-500">SonarQube URL (optional)</label>
+                <input type="url" id="sonarqube_url" name="sonarqube_url" placeholder="https://sonarqube.example.com"
+                    class="border border-gold-300 rounded px-4 py-3 bg-black text-white focus:outline-none focus:ring-2 focus:ring-gold-500 w-full" />
+            </div>
+
+            <button type="submit"
+                class="w-full bg-gold-500 text-black font-bold py-3 rounded hover:bg-gold-600 transition">
+                Generate Workflow
+            </button>
+        </form>
+
+        <!-- Back to Home Button -->
+        <div class="mt-6 text-center">
+            <a href="{% url 'home' %}"
+               class="inline-block px-6 py-2 border border-gold-500 rounded text-gold-500 hover:bg-gold-500 hover:text-black transition">
+                ← Back to Home
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-6 border-t border-gray-800 text-center text-sm text-gray-500">
+        <div class="flex justify-center space-x-4 mb-2">
+            <a href="#" class="hover:text-gold-500">GitHub</a>
+            <a href="#" class="hover:text-gold-500">LinkedIn</a>
+            <a href="#" class="hover:text-gold-500">Docs</a>
+        </div>
+        © 2025 DevGenie. All rights reserved by Durga Prakash Shilarapu.
+    </footer>
+
+</body>
+</html>
