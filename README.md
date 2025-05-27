@@ -45,7 +45,7 @@ Follow the instructions below to run DevGenie locally:
      - source venv/bin/activate
 
 5. Clone this repository
-  - [git clone https://github.com/your-username/devgenie.git](https://github.com/Durgaprakash1102/DevGenie.git)
+  - [https://github.com/Durgaprakash1102/DevGenie.git](https://github.com/Durgaprakash1102/DevGenie.git)
   - cd DevGenie
 
 6. Install Python dependencies
