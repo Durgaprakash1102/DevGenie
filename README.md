@@ -45,7 +45,7 @@ Follow the instructions below to run DevGenie locally:
      source venv/bin/activate
 
 5. Clone this repository
-   git clone https://github.com/your-username/devgenie.git
+   [git clone https://github.com/your-username/devgenie.git](https://github.com/Durgaprakash1102/DevGenie.git)
    cd DevGenie
 
 6. Install Python dependencies
@@ -102,5 +102,8 @@ All contributions to improve functionality, accuracy, and UI are welcome!
 
 
 
+## 🙌 Thanks
+
+Thanks to **Abhishek Veermalla** whose tutorial helped me understand and implement LLM integration in this prototype.
 
 
