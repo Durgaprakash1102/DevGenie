@@ -30,36 +30,36 @@ Follow the instructions below to run DevGenie locally:
    Download Ollama from: https://ollama.com/download
 
 2. Pull the LLaMA 3.2 (3B) model  
-- Open terminal and run:
-   ollama pull llama3:3b
+* Open terminal and run:
+  - ollama pull llama3:3b
 
 3. Create a virtual environment
-   python -m venv venv
+  - python -m venv venv
 
 4. Activate the virtual environment
 
    * On Windows:
-     venv\Scripts\activate
+    - venv\Scripts\activate
      
    * On macOS/Linux:
-     source venv/bin/activate
+     - source venv/bin/activate
 
 5. Clone this repository
-   [git clone https://github.com/your-username/devgenie.git](https://github.com/Durgaprakash1102/DevGenie.git)
-   cd DevGenie
+  - [git clone https://github.com/your-username/devgenie.git](https://github.com/Durgaprakash1102/DevGenie.git)
+  - cd DevGenie
 
 6. Install Python dependencies
-   pip install -r requirements.txt
+   - pip install -r requirements.txt
 
 7. Apply Django migrations
-   python manage.py makemigrations
-   python manage.py migrate
+  - python manage.py makemigrations
+  - python manage.py migrate
 
 8. Run the development server
-   python manage.py runserver
+  - python manage.py runserver
 
 9. Open your browser and visit:
-   [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+  - [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 ## ⚠️ Important Notes
 
